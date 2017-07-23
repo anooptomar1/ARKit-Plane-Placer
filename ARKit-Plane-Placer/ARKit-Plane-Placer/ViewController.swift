@@ -12,6 +12,7 @@ import ARKit
 class ViewController: UIViewController, ARSCNViewDelegate {
 
     @IBOutlet var sceneView: ARSCNView!
+    var planes = [Plane]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,10 +23,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         // Show statistics such as fps and timing information
         sceneView.showsStatistics = true
         
-        // Create a new scene
-        let scene = SCNScene(named: "art.scnassets/ship.scn")!
-        
-        // Set the scene to the view
+        let scene = SCNScene()
         sceneView.scene = scene
     }
     
@@ -34,6 +32,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         
         // Create a session configuration
         let configuration = ARWorldTrackingSessionConfiguration()
+        configuration.planeDetection = .horizontal
         
         // Run the view's session
         sceneView.session.run(configuration)
@@ -45,22 +44,32 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         // Pause the view's session
         sceneView.session.pause()
     }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Release any cached data, images, etc that aren't in use.
-    }
 
     // MARK: - ARSCNViewDelegate
     
-/*
     // Override to create and configure nodes for anchors added to the view's session.
-    func renderer(_ renderer: SCNSceneRenderer, nodeFor anchor: ARAnchor) -> SCNNode? {
-        let node = SCNNode()
-     
-        return node
+    func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
+        if !(anchor is ARPlaneAnchor) {
+            return
+        }
+        
+        let plane = Plane(anchor: anchor as! ARPlaneAnchor)
+        planes.append(plane)
+        node.addChildNode(plane)
     }
-*/
+    
+    func renderer(_ renderer: SCNSceneRenderer, didUpdate node: SCNNode, for anchor: ARAnchor) {
+        let plane = planes.filter { plane in
+            return plane.anchor.identifier == anchor.identifier
+            }.first
+        
+        if plane == nil {
+            return
+        }
+        
+        plane?.update(anchor: anchor as! ARPlaneAnchor)
+    }
+
     
     func session(_ session: ARSession, didFailWithError error: Error) {
         // Present an error message to the user
