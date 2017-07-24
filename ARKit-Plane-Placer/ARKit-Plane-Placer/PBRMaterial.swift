@@ -19,11 +19,17 @@ class PBRMaterial {
         
         let mat = SCNMaterial()
         mat.lightingModel = .physicallyBased
-//        mat.diffuse.contents = UIImage(named: "Planes/\(name)-diffuse.png")
-        mat.diffuse.contents = UIImage(named: "\(name)-diffuse.png")
-        mat.roughness.contents = UIImage(named: "\(name)-roughness.png")
-        mat.metalness.contents = UIImage(named: "\(name)-metal.png")
-        mat.normal.contents = UIImage(named: "\(name)-normal.png")
+//        mat.diffuse.contents = UIImage(named: "\(name)-diffuse.png")
+//        mat.roughness.contents = UIImage(named: "\(name)-roughness.png")
+//        mat.metalness.contents = UIImage(named: "\(name)-metal.png")
+//        mat.normal.contents = UIImage(named: "\(name)-normal.png")
+        
+        mat.diffuse.contents = UIImage(named: "./art.scnassets/Materials/\(name)/\(name)-albedo.png")
+        mat.roughness.contents = UIImage(named: "./art.scnassets/Materials/\(name)/\(name)-roughness.png")
+        mat.metalness.contents = UIImage(named: "./art.scnassets/Materials/\(name)/\(name)-metal.png")
+        mat.normal.contents = UIImage(named: "./art.scnassets/Materials/\(name)/\(name)-normal.png")
+        
+        
         mat.diffuse.wrapS = .repeat
         mat.diffuse.wrapT = .repeat
         mat.roughness.wrapS = .repeat

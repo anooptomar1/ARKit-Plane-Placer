@@ -28,11 +28,8 @@ class Plane: SCNNode {
         
         planeGeometry = SCNPlane(width: CGFloat(width), height: CGFloat(height))
         
-        let material = pbrMaterial.materialNamed("grid")
+        let material = pbrMaterial.materialNamed("tron")
         material.name = "grid"
-//        let material = SCNMaterial()
-//        material.diffuse.contents = UIImage(named: "\(name)-diffuse.png")
-//        material.lightingModel = .physicallyBased
         planeGeometry.materials = [material]
         
         let planeNode = SCNNode(geometry: planeGeometry)
