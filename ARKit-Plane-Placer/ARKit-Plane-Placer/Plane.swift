@@ -29,8 +29,11 @@ class Plane: SCNNode {
         planeGeometry = SCNPlane(width: CGFloat(width), height: CGFloat(height))
         
         let material = pbrMaterial.materialNamed("grid")
+        material.name = "grid"
+//        let material = SCNMaterial()
+//        material.diffuse.contents = UIImage(named: "\(name)-diffuse.png")
+//        material.lightingModel = .physicallyBased
         planeGeometry.materials = [material]
-        planeGeometry.name = "grid"
         
         let planeNode = SCNNode(geometry: planeGeometry)
         planeNode.physicsBody = SCNPhysicsBody(type: .static, shape: SCNPhysicsShape(geometry: self.planeGeometry, options: nil))
@@ -81,8 +84,6 @@ class Plane: SCNNode {
         let material = planeGeometry.material(named: "grid")
         let scaleFactor: Float = 1
         let m = SCNMatrix4MakeScale(width * scaleFactor, height * scaleFactor, 1)
-//        material?.diffuse.contentsTransform = SCNMatrix4MakeScale(width, height, 1)
-//        material?.diffuse.wrapS = SCNWrapMode.repeat
         material?.diffuse.contentsTransform = m
         material?.roughness.contentsTransform = m
         material?.metalness.contentsTransform = m
