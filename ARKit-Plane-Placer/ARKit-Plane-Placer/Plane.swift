@@ -28,7 +28,7 @@ class Plane: SCNNode {
         
         planeGeometry = SCNPlane(width: CGFloat(width), height: CGFloat(height))
         
-        let material = pbrMaterial.materialNamed("tron")
+        let material = pbrMaterial.materialNamed("grid")
         planeGeometry.materials = [material]
         planeGeometry.name = "grid"
         
@@ -79,14 +79,14 @@ class Plane: SCNNode {
         // grid is less than 1 unit, we don't want to squash the texture to fit, so
         // scaling updates the texture co-ordinates to crop the texture in that case
         let material = planeGeometry.material(named: "grid")
-//        let scaleFactor: Float = 1
-//        let m = SCNMatrix4MakeScale(width * scaleFactor, height * scaleFactor, 1)
-        material?.diffuse.contentsTransform = SCNMatrix4MakeScale(width, height, 1)
-        material?.diffuse.wrapS = SCNWrapMode.repeat
-//        material?.diffuse.contentsTransform = m
-//        material?.roughness.contentsTransform = m
-//        material?.metalness.contentsTransform = m
-//        material?.normal.contentsTransform = m
+        let scaleFactor: Float = 1
+        let m = SCNMatrix4MakeScale(width * scaleFactor, height * scaleFactor, 1)
+//        material?.diffuse.contentsTransform = SCNMatrix4MakeScale(width, height, 1)
+//        material?.diffuse.wrapS = SCNWrapMode.repeat
+        material?.diffuse.contentsTransform = m
+        material?.roughness.contentsTransform = m
+        material?.metalness.contentsTransform = m
+        material?.normal.contentsTransform = m
     }
     
     required init?(coder aDecoder: NSCoder) {
