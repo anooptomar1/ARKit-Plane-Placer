@@ -38,11 +38,40 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         setupRecognizers()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        setConfiguration(withPlaneDetection: true)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        // Pause the view's session
+        sceneView.session.pause()
+    }
+    
     func setupRecognizers() {
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTap))
         tapGestureRecognizer.numberOfTapsRequired = 1
         sceneView.addGestureRecognizer(tapGestureRecognizer)
     }
+    
+    // MARK: - Setup
+    
+    func setConfiguration(withPlaneDetection: Bool) {
+        // Create a session configuration
+        let configuration = ARWorldTrackingSessionConfiguration()
+        if withPlaneDetection {
+            configuration.planeDetection = .horizontal
+        } else {
+            configuration.planeDetection = []
+        }
+        
+        sceneView.session.run(configuration)
+    }
+    
+    // MARK: - Tap
     
     @objc func handleTap(recognizer: UITapGestureRecognizer) {
         let tapPoint = recognizer.location(in: sceneView)
@@ -54,6 +83,8 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         
         addObjectToSceneWith(hitResult)
     }
+    
+    // MARK: - Add objects
     
     func addObjectToSceneWith(_ hitResult: ARHitTestResult) {
         let dimension: CGFloat = 0.1
@@ -73,31 +104,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         boxes.append(node)
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        setConfiguration(withPlaneDetection: true)
-    }
-    
-    func setConfiguration(withPlaneDetection: Bool) {
-        // Create a session configuration
-        let configuration = ARWorldTrackingSessionConfiguration()
-        if withPlaneDetection {
-            configuration.planeDetection = .horizontal
-        } else {
-            configuration.planeDetection = []
-        }
-        
-        // Run the view's session
-        sceneView.session.run(configuration)
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        
-        // Pause the view's session
-        sceneView.session.pause()
-    }
+    // MARK: - Toggle settings
     
     @IBAction func togglePlaneDetection(_ sender: UISwitch) {
         if sender.isOn {
