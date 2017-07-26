@@ -15,6 +15,7 @@
 		E84AC6EE1F226EC800DBDE7E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E84AC6EC1F226EC800DBDE7E /* LaunchScreen.storyboard */; };
 		E84AC6F61F226FA700DBDE7E /* Plane.swift in Sources */ = {isa = PBXBuildFile; fileRef = E84AC6F51F226FA700DBDE7E /* Plane.swift */; };
 		E8C934381F25641F0010428F /* PBRMaterial.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8C934371F25641F0010428F /* PBRMaterial.swift */; };
+		E8EFF7711F28E44D006EBB8F /* BodyType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8EFF7701F28E44D006EBB8F /* BodyType.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +29,7 @@
 		E84AC6EF1F226EC800DBDE7E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E84AC6F51F226FA700DBDE7E /* Plane.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Plane.swift; sourceTree = "<group>"; };
 		E8C934371F25641F0010428F /* PBRMaterial.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PBRMaterial.swift; sourceTree = "<group>"; };
+		E8EFF7701F28E44D006EBB8F /* BodyType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BodyType.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,6 +66,7 @@
 				E84AC6E31F226EC800DBDE7E /* art.scnassets */,
 				E84AC6E51F226EC800DBDE7E /* ViewController.swift */,
 				E84AC6F51F226FA700DBDE7E /* Plane.swift */,
+				E8EFF7701F28E44D006EBB8F /* BodyType.swift */,
 				E8C934371F25641F0010428F /* PBRMaterial.swift */,
 				E84AC6E71F226EC800DBDE7E /* Main.storyboard */,
 				E84AC6EA1F226EC800DBDE7E /* Assets.xcassets */,
@@ -145,6 +148,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E84AC6E61F226EC800DBDE7E /* ViewController.swift in Sources */,
+				E8EFF7711F28E44D006EBB8F /* BodyType.swift in Sources */,
 				E84AC6F61F226FA700DBDE7E /* Plane.swift in Sources */,
 				E84AC6E21F226EC800DBDE7E /* AppDelegate.swift in Sources */,
 				E8C934381F25641F0010428F /* PBRMaterial.swift in Sources */,

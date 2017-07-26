@@ -9,11 +9,6 @@ import Foundation
 import SceneKit
 import ARKit
 
-enum BodyType : Int {
-    case box = 1
-    case plane = 2
-}
-
 class Plane: SCNNode {
     let pbrMaterial = PBRMaterial()
     var anchor: ARPlaneAnchor
@@ -33,7 +28,7 @@ class Plane: SCNNode {
         planeGeometry.materials = [material]
         
         let planeNode = SCNNode(geometry: planeGeometry)
-        planeNode.physicsBody = SCNPhysicsBody(type: .static, shape: SCNPhysicsShape(geometry: self.planeGeometry, options: nil))
+        planeNode.physicsBody = SCNPhysicsBody(type: .static, shape: SCNPhysicsShape(geometry: planeGeometry, options: nil))
         planeNode.physicsBody?.categoryBitMask = BodyType.plane.rawValue
         planeNode.position = SCNVector3Make(anchor.center.x, 0, anchor.center.z)
         planeNode.transform = SCNMatrix4MakeRotation(Float(-Double.pi / 2.0), 1.0, 0.0, 0.0)
