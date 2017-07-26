@@ -41,7 +41,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        setConfiguration(withPlaneDetection: true)
+        setConfiguration(withPlaneDetection: false)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -96,6 +96,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         cube.materials = [material]
         
         let node = SCNNode(geometry: cube)
+        node.physicsBody?.mass = 1.0
         node.physicsBody = SCNPhysicsBody(type: SCNPhysicsBodyType.kinematic, shape: nil)
         let yOffset: Float = Float(cube.height)
         node.position = SCNVector3Make(hitResult.worldTransform.columns.3.x, hitResult.worldTransform.columns.3.y.advanced(by: yOffset), hitResult.worldTransform.columns.3.z)
