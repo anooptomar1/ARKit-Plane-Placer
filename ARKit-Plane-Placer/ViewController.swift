@@ -38,9 +38,17 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        setConfiguration(withPlanesHidden: false)
+    }
+    
+    func setConfiguration(withPlanesHidden: Bool) {
         // Create a session configuration
         let configuration = ARWorldTrackingSessionConfiguration()
-        configuration.planeDetection = .horizontal
+        if withPlanesHidden {
+            configuration.planeDetection = []
+        } else {
+            configuration.planeDetection = .horizontal
+        }
         
         // Run the view's session
         sceneView.session.run(configuration)
@@ -56,8 +64,10 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     @IBAction func togglePlaneDetection(_ sender: UISwitch) {
         if sender.isOn {
             // detect planes
+            setConfiguration(withPlanesHidden: false)
         } else {
             // stop plane detection
+            setConfiguration(withPlanesHidden: true)
         }
     }
     
