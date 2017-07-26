@@ -16,6 +16,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     @IBOutlet weak var hideSwitch: UISwitch!
     
     var planes = [Plane]()
+    var boxes: [SCNNode] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,21 +34,58 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         
         let scene = SCNScene()
         sceneView.scene = scene
+        
+        setupRecognizers()
+    }
+    
+    func setupRecognizers() {
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTap))
+        tapGestureRecognizer.numberOfTapsRequired = 1
+        sceneView.addGestureRecognizer(tapGestureRecognizer)
+    }
+    
+    @objc func handleTap(recognizer: UITapGestureRecognizer) {
+        let tapPoint = recognizer.location(in: sceneView)
+        let result = sceneView.hitTest(tapPoint, types: .existingPlaneUsingExtent)
+        guard let hitResult = result.first else {
+            print("No hit result")
+            return
+        }
+        
+        addObjectToSceneWith(hitResult)
+    }
+    
+    func addObjectToSceneWith(_ hitResult: ARHitTestResult) {
+        let dimension: CGFloat = 0.1
+        
+        let material = SCNMaterial()
+        material.diffuse.contents = UIColor.red
+        
+        let cube = SCNBox(width: dimension, height: dimension, length: dimension, chamferRadius: 0)
+        cube.materials = [material]
+        
+        let node = SCNNode(geometry: cube)
+        node.physicsBody = SCNPhysicsBody(type: SCNPhysicsBodyType.kinematic, shape: nil)
+        let yOffset: Float = Float(cube.height)
+        node.position = SCNVector3Make(hitResult.worldTransform.columns.3.x, hitResult.worldTransform.columns.3.y.advanced(by: yOffset), hitResult.worldTransform.columns.3.z)
+        
+        sceneView.scene.rootNode.addChildNode(node)
+        boxes.append(node)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        setConfiguration(withPlanesHidden: false)
+        setConfiguration(withPlaneDetection: true)
     }
     
-    func setConfiguration(withPlanesHidden: Bool) {
+    func setConfiguration(withPlaneDetection: Bool) {
         // Create a session configuration
         let configuration = ARWorldTrackingSessionConfiguration()
-        if withPlanesHidden {
-            configuration.planeDetection = []
-        } else {
+        if withPlaneDetection {
             configuration.planeDetection = .horizontal
+        } else {
+            configuration.planeDetection = []
         }
         
         // Run the view's session
@@ -64,10 +102,10 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     @IBAction func togglePlaneDetection(_ sender: UISwitch) {
         if sender.isOn {
             // detect planes
-            setConfiguration(withPlanesHidden: false)
+            setConfiguration(withPlaneDetection: true)
         } else {
             // stop plane detection
-            setConfiguration(withPlanesHidden: true)
+            setConfiguration(withPlaneDetection: false)
         }
     }
     
