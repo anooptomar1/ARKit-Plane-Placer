@@ -12,6 +12,9 @@ import ARKit
 class ViewController: UIViewController, ARSCNViewDelegate {
 
     @IBOutlet var sceneView: ARSCNView!
+    @IBOutlet weak var detectSwitch: UISwitch!
+    @IBOutlet weak var hideSwitch: UISwitch!
+    
     var planes = [Plane]()
     
     override func viewDidLoad() {
@@ -49,7 +52,25 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         // Pause the view's session
         sceneView.session.pause()
     }
-
+    
+    @IBAction func togglePlaneDetection(_ sender: UISwitch) {
+        if sender.isOn {
+            // detect planes
+        } else {
+            // stop plane detection
+        }
+    }
+    
+    @IBAction func togglePlaneHidden(_ sender: UISwitch) {
+        if sender.isOn {
+            // hide planes
+            planes.forEach({ $0.hide() })
+        } else {
+            // show planes
+            planes.forEach({ $0.show() })
+        }
+    }
+    
     // MARK: - ARSCNViewDelegate
     
     // Override to create and configure nodes for anchors added to the view's session.

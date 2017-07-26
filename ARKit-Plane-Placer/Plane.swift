@@ -29,7 +29,7 @@ class Plane: SCNNode {
         planeGeometry = SCNPlane(width: CGFloat(width), height: CGFloat(height))
         
         let material = pbrMaterial.materialNamed("tron")
-        material.name = "grid"
+        material.name = "plane"
         planeGeometry.materials = [material]
         
         let planeNode = SCNNode(geometry: planeGeometry)
@@ -46,7 +46,14 @@ class Plane: SCNNode {
     func hide() {
         let transparentMaterial = SCNMaterial()
         transparentMaterial.diffuse.contents = UIColor.white.withAlphaComponent(0.0)
+        transparentMaterial.name = "plane"
         planeGeometry.materials = [transparentMaterial]
+    }
+    
+    func show() {
+        let material = pbrMaterial.materialNamed("tron")
+        material.name = "plane"
+        planeGeometry.materials = [material]
     }
     
     func update(anchor :ARPlaneAnchor) {
@@ -78,7 +85,7 @@ class Plane: SCNNode {
         // cover the entire plane, repeating the texture over and over. Also if the
         // grid is less than 1 unit, we don't want to squash the texture to fit, so
         // scaling updates the texture co-ordinates to crop the texture in that case
-        let material = planeGeometry.material(named: "grid")
+        let material = planeGeometry.material(named: "plane")
         let scaleFactor: Float = 1
         let m = SCNMatrix4MakeScale(width * scaleFactor, height * scaleFactor, 1)
         material?.diffuse.contentsTransform = m
